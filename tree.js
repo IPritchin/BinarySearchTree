@@ -1,24 +1,29 @@
-function Node(value) {
-	this.value = value;
-	this.left = null;
-	this.right = null;
+class Node {
+
+	constructor(value) {
+		this.value = value;
+		this.left = null;
+		this.right = null;
+	}
+
 }
 
-function BinarySearchTree() {
-	this.root = null;
-}
 
-BinarySearchTree.prototype = {
+class BinarySearchTree {
 
-	insert: function(value) {
-		let insertNode = new Node(value);
+	constructor() {
+		this.root = null;
+	}
+
+	insert(value) {
+		let insertNode = new Node(value),
 			currentNode = this.root;
 
 		if (!this.root) {
 			this.root = insertNode;
 			return;
 		}
-		while(true)
+		while(true) {
 			if (value >= currentNode.value) {
 				if (currentNode.right === null) {
 					currentNode.right = insertNode;
@@ -37,9 +42,10 @@ BinarySearchTree.prototype = {
 					currentNode = currentNode.left;
 				}
 			}
-	},
+		}
+	}
 
-	remove: function(value, root = this.root) {
+	remove(value, root = this.root) {
 		if (!root) {
 			return root;
 		}
@@ -60,64 +66,64 @@ BinarySearchTree.prototype = {
 			root = root.right;
 		}
 		return root;
-	},
+	}
 
-	maxNode: function(root = this.root) {
+	maxNode(root = this.root) {
 		while (root.right !== null) {
 			root = root.right;
 		}
 		return root;
-	},
+	}
 
-	minNode: function(root = this.root) {
+	minNode(root = this.root) {
 		while (root.left !== null) {
 			root = root.left;
 		}
 		return root;
-	},
+	}
 
-	max: function(root = this.root) {
+	max(root = this.root) {
 		return this.maxNode(root).value;
-	},
+	}
 
-	min: function(root = this.root) {
+	min(root = this.root) {
 		return this.minNode(root).value;
-	},
+	}
 
-	inorderTraversal: function(root = this.root, acc = []) {
-		if (!root) {
-			inorderTraversal(root.left, acc);
+	inorderTraversal(root = this.root, acc = []) {
+		if (root) {
+			this.inorderTraversal(root.left, acc);
 			acc.push(root.value);
-			inorderTraversal(root.right, acc);
+			this.inorderTraversal(root.right, acc);
 		}
 		if (this.root === root) {
 			return acc;
 		}
-	},
+	}
 
-	preorderTraversal: function(root = this.root, acc = []) {
-		if (!root) {
+	preorderTraversal(root = this.root, acc = []) {
+		if (root) {
 			acc.push(root.value);
-			preorderTraversal(root.left, acc);
-			preorderTraversal(root.right, acc);
+			this.preorderTraversal(root.left, acc);
+			this.preorderTraversal(root.right, acc);
 		}
 		if (this.root === root) {
 			return acc;
 		}
-	},
+	}
 
-	postorderTraversal: function(root = this.root, acc = []) {
-		if (!root) {
-			postorderTraversal(root.left, acc);
-			postorderTraversal(root.right, acc);
+	postorderTraversal(root = this.root, acc = []) {
+		if (root) {
+			this.postorderTraversal(root.left, acc);
+			this.postorderTraversal(root.right, acc);
 			acc.push(root.value);
 		}
 		if (this.root === root) {
 			return acc;
 		}
-	},
+	}
 
-	search: function(value) {
+	search(value) {
 		if (!this.root) return false;
 
 		currentNode = this.root;
@@ -132,20 +138,20 @@ BinarySearchTree.prototype = {
 				return true;
 			}
 		}
-	},
+	}
 
-	isBinarySearchTree: function(root = this.root) {
+	isBinarySearchTree(root = this.root) {
 
 		function check(root, min, max) {
 			if (root === null) return true;
 			if (root.value <= min || max <= root.value) return false
-			return check(root.left, min, root.value) && check(root.right, root.key, max)
+			return this.check(root.left, min, root.value) && this.check(root.right, root.key, max)
 		}
 
  		return check(root, -Infinity, Infinity)
-	},
+	}
 
-	countNodes: function(root = this.root) {
+	countNodes(root = this.root) {
 		let left, right;
 
 		if (!root) {
