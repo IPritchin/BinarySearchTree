@@ -15,31 +15,19 @@ class BinarySearchTree {
 		this.root = null;
 	}
 
-	insert(value) {
-		let insertNode = new Node(value),
-			currentNode = this.root;
-
-		if (!this.root) {
-			this.root = insertNode;
-			return;
-		}
-		while(true) {
-			if (value >= currentNode.value) {
-				if (currentNode.right === null) {
-					currentNode.right = insertNode;
-					break;
-				} else {
-					currentNode = currentNode.right;
-				}
+	insert(value, root = this.root) {
+		if (root === null) {
+			if (root === this.root) {
+				this.root = new Node(value);
 			} else {
-				if (currentNode.left === null) {
-					currentNode.left = insertNode;
-					break;
-				} else {
-					currentNode = currentNode.left;
-				}
+				return new Node(value);
 			}
-		}
+		} else if (value < root.value) {
+			root.left = this.insert(value, root.left)
+		} else if (value > root.value) {
+			root.right = this.insert(value, root.right)
+		} 
+		return root;
 	}
 
 	remove(value, root = this.root) {
@@ -116,21 +104,19 @@ class BinarySearchTree {
 		}
 	}
 
-	search(value) {
-		if (!this.root) return false;
-
-		currentNode = this.root;
-		while (true) {
-			if (currentNode === null) {
-				return false
-			} else if (value > currentNode.value) {
-				currentNode = currentNode.right;
-			} else if (value < currentNode.value) {
-				currentNode = currentNode.left;
-			} else {
-				return true;
-			}
+	searchNode(value, root = this.root) {
+		if (root === null || value === root.value) {
+			return root;
+		} 
+		if (value < root.value) {
+			return this.searchNode(value, root.left)
+		} else {
+			return this.searchNode(value, root.right)
 		}
+	}
+
+	search(value) {
+		return this.searchNode(value) !== null;
 	}
 
 	isBinarySearchTree(root = this.root) {
@@ -138,7 +124,7 @@ class BinarySearchTree {
 		function check(root, min, max) {
 			if (root === null) return true;
 			if (root.value <= min || max <= root.value) return false
-			return this.check(root.left, min, root.value) && this.check(root.right, root.key, max)
+			return check(root.left, min, root.value) && check(root.right, root.key, max)
 		}
 
  		return check(root, -Infinity, Infinity)
