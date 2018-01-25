@@ -28,17 +28,14 @@ class BinarySearchTree {
 				if (currentNode.right === null) {
 					currentNode.right = insertNode;
 					break;
-				}
-				else {
+				} else {
 					currentNode = currentNode.right;
 				}
-			}
-			else {
+			} else {
 				if (currentNode.left === null) {
 					currentNode.left = insertNode;
 					break;
-				}
-				else {
+				} else {
 					currentNode = currentNode.left;
 				}
 			}
@@ -51,18 +48,14 @@ class BinarySearchTree {
 		}
 		if (value < root.value) {
 			root.left = this.remove(value, root.left);
-		}
-		else if (value > root.value) {
+		} else if (value > root.value) {
 			root.right = this.remove(value, root.right);
-		}
-		else if (root.left !== null && root.right !== null) {
+		} else if (root.left !== null && root.right !== null) {
 			root.value = this.min(root.right);
 			root.right = this.remove(root.value, root.right);
-		} 
-		else if (root.left !== null) {
+		} else if (root.left !== null) {
 			root = root.left;
-		} 
-		else {
+		} else {
 			root = root.right;
 		}
 		return root;
@@ -162,14 +155,12 @@ class BinarySearchTree {
 		}
 		if (root.left) {
 			left = this.countNodes(root.left);
-		}
-		else {
+		} else {
 			left = 0;
 		}
 		if (root.right) {
 			right = this.countNodes(root.right);
-		} 
-		else { 
+		} else { 
 			right = 0;
 		}
 
